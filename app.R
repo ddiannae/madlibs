@@ -35,6 +35,11 @@ server <- function(input, output) {
   log_info("Waiting for user input...")
   story <- eventReactive(input$submit, {
     log_info("We got user input, generating story...")
+
+    if(input$noun1=="") {
+      log_warn("Noun input is empty, using default value.")
+      input$noun1 <- "cat"
+    }
     generate_story(input$noun1, input$verb, input$adjective, input$adverb)
   })
   log_info("Setting up output rendering...")
