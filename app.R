@@ -1,5 +1,10 @@
 library(shiny)
+library(useself)
+library(logger)
 
+
+log_threshold(DEBUG)
+log_info("Script starting up...")
 generate_story <- function(noun, verb, adjective, adverb) {
   glue::glue(
     "
@@ -16,7 +21,7 @@ ui <- fluidPage(
       textInput("noun1", "Enter a noun:", ""),
       textInput("verb", "Enter a verb:", ""),
       textInput("adjective", "Enter an adjective:", ""),
-      textInput("adverb", "Enter an adverb:", ""),
+      textInput("adverb", "Enter an adverb:", "", on),
       actionButton("submit", "Create Story")
     ),
     mainPanel(
@@ -27,9 +32,12 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
+  log_info("Waiting for user input...")
   story <- eventReactive(input$submit, {
+    log_info("We got user input, generating story...")
     generate_story(input$noun1, input$verb, input$adjective, input$adverb)
   })
+  log_info("Setting up output rendering...")
   output$story <- renderText({
     story()
   })
