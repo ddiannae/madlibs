@@ -21,7 +21,7 @@ ui <- fluidPage(
       textInput("noun1", "Enter a noun:", ""),
       textInput("verb", "Enter a verb:", ""),
       textInput("adjective", "Enter an adjective:", ""),
-      textInput("adverb", "Enter an adverb:", "", on),
+      textInput("adverb", "Enter an adverb:", ""),
       actionButton("submit", "Create Story")
     ),
     mainPanel(
